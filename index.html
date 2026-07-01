@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>¿Tu cerebro está en riesgo? — Test Cognitivo Gratuito</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green:       #2D5A3D;
+    --green-mid:   #3D7A52;
+    --green-light: #EAF3ED;
+    --gold:        #C9A84C;
+    --gold-light:  #FDF6E3;
+    --cream:       #FAFAF5;
+    --white:       #FFFFFF;
+    --ink:         #1A1A1A;
+    --ink-soft:    #3D3D3D;
+    --muted:       #6B6B6B;
+    --border:      #E2DDD4;
+    --red:         #C0392B;
+    --red-light:   #FDECEA;
+    --orange:      #D47A2A;
+    --orange-light:#FEF3E2;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    width: 100%;
+    background: var(--green);
+    padding: 14px 20px;
+    text-align: center;
+  }
+  .site-header span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ── MAIN CONTAINER ── */
+  .quiz-wrap {
+    width: 100%;
+    max-width: 560px;
+    padding: 24px 16px 60px;
+    flex: 1;
+  }
+
+  /* ── SCREENS ── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── INTRO SCREEN ── */
+  .intro-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold-light);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .intro-headline {
+    font-family: Georgia, serif;
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .intro-headline em {
+    font-style: normal;
+    color: var(--green);
+  }
+
+  .intro-sub {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  .intro-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .stat-box {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--green);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.3;
+  }
+
+  .btn-start {
+    width: 100%;
+    background: var(--green);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 18px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: background 0.2s, transform 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .btn-start:hover { background: var(--green-mid); transform: translateY(-1px); }
+
+  .trust-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+
+  .trust-item {
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-area {
+    margin-bottom: 28px;
+  }
+
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .progress-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .progress-frac {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--green);
+  }
+
+  .progress-track {
+    width: 100%;
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green) 0%, var(--gold) 100%);
+    border-radius: 4px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  /* ── BRAIN ICONS ── */
+  .brain-row {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .brain-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background 0.3s, transform 0.3s;
+  }
+
+  .brain-dot.lit {
+    background: var(--green);
+    transform: scale(1.2);
+  }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 24px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    animation: slideIn 0.3s ease;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-category {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .q-category::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+  }
+
+  .q-text {
+    font-family: Georgia, serif;
+    font-size: clamp(1.05rem, 3.5vw, 1.2rem);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+    margin-bottom: 22px;
+  }
+
+  /* ── OPTIONS ── */
+  .options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .option-btn {
+    width: 100%;
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+    transition: all 0.18s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .option-btn:hover {
+    border-color: var(--green);
+    background: var(--green-light);
+    color: var(--green);
+    transform: translateX(3px);
+  }
+
+  .option-btn.selected {
+    border-color: var(--green);
+    background: var(--green-light);
+    color: var(--green);
+  }
+
+  .option-letter {
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    transition: all 0.18s;
+    flex-shrink: 0;
+  }
+
+  .option-btn:hover .option-letter,
+  .option-btn.selected .option-letter {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--white);
+  }
+
+  /* ── LOADING SCREEN ── */
+  .loading-screen {
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .brain-anim {
+    font-size: 3rem;
+    margin-bottom: 24px;
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+  }
+
+  .loading-title {
+    font-family: Georgia, serif;
+    font-size: 1.3rem;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .loading-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  .loading-bar-track {
+    width: 100%;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .loading-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--gold));
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+
+  .loading-step {
+    font-size: 13px;
+    color: var(--muted);
+    min-height: 20px;
+    transition: opacity 0.3s;
+  }
+
+  /* ── RESULT SCREENS ── */
+  .result-card {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    animation: slideIn 0.5s ease;
+  }
+
+  .result-header {
+    padding: 28px 24px 24px;
+    text-align: center;
+  }
+
+  .result-header.leve    { background: var(--green-light); }
+  .result-header.moderado { background: var(--orange-light); }
+  .result-header.alto    { background: var(--red-light); }
+
+  .result-icon { font-size: 2.8rem; margin-bottom: 12px; }
+
+  .result-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+
+  .result-badge.leve     { background: var(--green); color: var(--white); }
+  .result-badge.moderado { background: var(--orange); color: var(--white); }
+  .result-badge.alto     { background: var(--red); color: var(--white); }
+
+  .result-title {
+    font-family: Georgia, serif;
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: 0;
+  }
+
+  .result-body {
+    padding: 24px;
+  }
+
+  .result-score-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+  }
+
+  .score-label { font-size: 12px; color: var(--muted); }
+  .score-val {
+    font-family: Georgia, serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+  .score-val.leve     { color: var(--green); }
+  .score-val.moderado { color: var(--orange); }
+  .score-val.alto     { color: var(--red); }
+
+  .score-max { font-size: 12px; color: var(--muted); }
+
+  .result-text {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .result-text strong { color: var(--ink); }
+
+  .result-highlight {
+    border-left: 3px solid var(--gold);
+    padding: 14px 16px;
+    background: var(--gold-light);
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* ── SCORE BAR ── */
+  .score-bars {
+    margin-bottom: 24px;
+  }
+
+  .score-bar-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+
+  .score-bar-track {
+    width: 100%;
+    height: 10px;
+    background: var(--border);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  .score-bar-fill.leve     { background: var(--green); }
+  .score-bar-fill.moderado { background: var(--orange); }
+  .score-bar-fill.alto     { background: var(--red); }
+
+  /* ── CTA ── */
+  .btn-cta {
+    width: 100%;
+    padding: 18px 24px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    margin-bottom: 12px;
+  }
+
+  .btn-cta.primary {
+    background: var(--green);
+    color: var(--white);
+  }
+
+  .btn-cta.primary:hover {
+    background: var(--green-mid);
+    transform: translateY(-1px);
+  }
+
+  .btn-cta-sub {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .btn-cta-sub span { color: var(--green); font-weight: 600; }
+
+  /* ── SYMPTOMS LIST ── */
+  .symptoms-list {
+    list-style: none;
+    margin-bottom: 20px;
+  }
+
+  .symptoms-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.4;
+  }
+
+  .symptoms-list li:last-child { border-bottom: none; }
+
+  .sym-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 20px 0;
+  }
+
+  /* ── FOOTER ── */
+  .quiz-footer {
+    text-align: center;
+    padding: 16px 20px;
+    font-size: 10px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    background: var(--white);
+    width: 100%;
+    margin-top: auto;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 400px) {
+    .intro-stats { grid-template-columns: 1fr 1fr 1fr; }
+    .stat-num { font-size: 1.1rem; }
+    .q-card { padding: 20px 16px; }
+    .result-body { padding: 18px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <span>🧠 Test Cognitivo Gratuito · Dr. Alejandro Vega</span>
+</header>
+
+<div class="quiz-wrap">
+
+  <!-- ══════════════════════════════════════
+       SCREEN 0 — INTRO
+  ══════════════════════════════════════ -->
+  <div class="screen active" id="screen-intro">
+
+    <div style="margin-bottom:8px;">
+      <span class="intro-badge">⚡ Solo 2 minutos</span>
+    </div>
+
+    <h1 class="intro-headline">
+      ¿Tu cerebro está<br><em>perdiendo terreno</em> sin que lo sepas?
+    </h1>
+
+    <p class="intro-sub">
+      Responde estas 10 preguntas y descubre en qué nivel de riesgo está tu memoria ahora mismo — y qué puedes hacer hoy para revertirlo.
+    </p>
+
+    <!-- HERO IMAGE -->
+    <div style="margin: 0 -4px 24px; border-radius: 16px; overflow: hidden; max-height: 320px;">
+      <img
+        src="quiz-hero-image.jpeg"
+        alt="Persona mayor usando su celular con claridad mental"
+        style="width: 100%; height: 320px; object-fit: cover; object-position: center top; display: block; border-radius: 16px;"
+      />
+    </div>
+
+    <div class="intro-stats">
+      <div class="stat-box">
+        <span class="stat-num">10</span>
+        <span class="stat-label">preguntas rápidas</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">2'</span>
+        <span class="stat-label">para completar</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">3</span>
+        <span class="stat-label">niveles de riesgo</span>
+      </div>
+    </div>
+
+    <button class="btn-start" onclick="startQuiz()">
+      Iniciar el test gratuito
+      <span>→</span>
+    </button>
+
+    <div class="trust-row">
+      <span class="trust-item">🔒 Sin registro</span>
+      <span class="trust-item">📊 Resultado inmediato</span>
+      <span class="trust-item">🆓 100% gratuito</span>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREEN 1 — QUESTIONS
+  ══════════════════════════════════════ -->
+  <div class="screen" id="screen-quiz">
+
+    <!-- IMAGEM DINÂMICA POR PERGUNTA -->
+    <div style="margin: 0 -4px 20px; border-radius: 16px; overflow: hidden; max-height: 240px;">
+      <img
+        id="q-image"
+        src="quiz-q1.jpeg"
+        alt="Ilustración de la pregunta"
+        style="width: 100%; height: 240px; object-fit: cover; object-position: center 20%; display: block; border-radius: 16px; transition: opacity 0.3s ease;"
+      />
+    </div>
+
+    <div class="progress-area">
+      <div class="progress-meta">
+        <span class="progress-label">Tu progreso</span>
+        <span class="progress-frac" id="prog-frac">1 de 10</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="prog-fill"></div>
+      </div>
+      <div class="brain-row" id="brain-row"></div>
+    </div>
+
+    <div class="q-card" id="q-card">
+      <div class="q-category" id="q-category"></div>
+      <p class="q-text" id="q-text"></p>
+      <div class="options-list" id="options-list"></div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREEN 2 — LOADING
+  ══════════════════════════════════════ -->
+  <div class="screen" id="screen-loading">
+    <div class="loading-screen">
+      <div class="brain-anim">🧠</div>
+      <h2 class="loading-title">Analizando tus respuestas...</h2>
+      <p class="loading-sub">Calculando tu perfil cognitivo</p>
+      <div class="loading-bar-track">
+        <div class="loading-bar-fill" id="loading-bar"></div>
+      </div>
+      <p class="loading-step" id="loading-step">Evaluando frecuencia de olvidos...</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREEN 3A — RESULTADO LEVE
+  ══════════════════════════════════════ -->
+  <div class="screen" id="screen-leve">
+    <div class="result-card">
+      <div class="result-header leve">
+        <div class="result-icon">🟢</div>
+        <div class="result-badge leve">Alerta Leve</div>
+        <h2 class="result-title">Tu cerebro está bien, pero los primeros signos están apareciendo</h2>
+      </div>
+      <div class="result-body">
+
+        <div class="result-score-row">
+          <span class="score-label">Tu puntuación</span>
+          <span class="score-val leve" id="score-leve">—</span>
+          <span class="score-max">de 30 puntos</span>
+        </div>
+
+        <div class="score-bars">
+          <p class="score-bar-label">Nivel de riesgo cognitivo</p>
+          <div class="score-bar-track">
+            <div class="score-bar-fill leve" id="bar-leve"></div>
+          </div>
+        </div>
+
+        <p class="result-text">
+          Tus respuestas indican que tu memoria todavía funciona bien — pero algunos patrones sugieren que los niveles de <strong>orexina</strong> en tu cerebro pueden estar comenzando a caer silenciosamente.
+        </p>
+
+        <ul class="symptoms-list">
+          <li><span class="sym-icon">⚠️</span> Olvidos ocasionales que antes no tenías</li>
+          <li><span class="sym-icon">⚠️</span> Palabras que a veces se quedan en la punta de la lengua</li>
+          <li><span class="sym-icon">⚠️</span> Pequeñas dificultades de concentración</li>
+        </ul>
+
+        <div class="result-highlight">
+          "Estás en el momento ideal para actuar. Antes de que los apagones se vuelvan frecuentes. Antes de que sea difícil revertir. El Dr. Alejandro Vega tiene un mensaje importante para ti."
+        </div>
+
+        <a href="VSL_URL?resultado=leve" class="btn-cta primary" id="cta-leve">
+          Ver el mensaje del Dr. Vega →
+        </a>
+        <p class="btn-cta-sub">Acceso gratuito · <span>Video exclusivo para tu perfil</span></p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREEN 3B — RESULTADO MODERADO
+  ══════════════════════════════════════ -->
+  <div class="screen" id="screen-moderado">
+    <div class="result-card">
+      <div class="result-header moderado">
+        <div class="result-icon">🟡</div>
+        <div class="result-badge moderado">Alerta Moderado</div>
+        <h2 class="result-title">Tu cerebro está enviando señales que no debes ignorar</h2>
+      </div>
+      <div class="result-body">
+
+        <div class="result-score-row">
+          <span class="score-label">Tu puntuación</span>
+          <span class="score-val moderado" id="score-moderado">—</span>
+          <span class="score-max">de 30 puntos</span>
+        </div>
+
+        <div class="score-bars">
+          <p class="score-bar-label">Nivel de riesgo cognitivo</p>
+          <div class="score-bar-track">
+            <div class="score-bar-fill moderado" id="bar-moderado"></div>
+          </div>
+        </div>
+
+        <p class="result-text">
+          Tus respuestas muestran patrones de <strong>deficiencia de orexina</strong> que ya están afectando tu memoria y claridad mental de forma perceptible. Los apagones, la niebla mental y la dificultad para recordar nombres no son "cosas de la edad".
+        </p>
+
+        <ul class="symptoms-list">
+          <li><span class="sym-icon">🔶</span> Apagones de memoria frecuentes</li>
+          <li><span class="sym-icon">🔶</span> Niebla mental que afecta tu día a día</li>
+          <li><span class="sym-icon">🔶</span> Dificultad para seguir conversaciones largas</li>
+          <li><span class="sym-icon">🔶</span> Olvidos que otras personas ya notaron</li>
+        </ul>
+
+        <div class="result-highlight">
+          "Son síntomas de un proceso que, si no se corrige ahora, avanza. El Dr. Alejandro Vega descubrió exactamente qué está causando esto en tu caso — y qué hacer en los próximos 21 días."
+        </div>
+
+        <a href="VSL_URL?resultado=moderado" class="btn-cta primary" id="cta-moderado">
+          Ver el mensaje del Dr. Vega →
+        </a>
+        <p class="btn-cta-sub">Acceso gratuito · <span>Video exclusivo para tu perfil</span></p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREEN 3C — RESULTADO ALTO
+  ══════════════════════════════════════ -->
+  <div class="screen" id="screen-alto">
+    <div class="result-card">
+
+      <!-- RESULT IMAGE -->
+      <div style="overflow: hidden; max-height: 280px; border-radius: 16px 16px 0 0;">
+        <img
+          src="quiz-result-image.jpeg"
+          alt="Persona confundida tratando de recordar algo"
+          style="width: 100%; height: 280px; object-fit: cover; object-position: center 15%; display: block;"
+        />
+      </div>
+
+      <div class="result-header alto" style="border-radius: 0;">
+        <div class="result-icon">🔴</div>
+        <div class="result-badge alto">Alerta Alto</div>
+        <h2 class="result-title">Tu cerebro necesita atención urgente</h2>
+      </div>
+      <div class="result-body">
+
+        <div class="result-score-row">
+          <span class="score-label">Tu puntuación</span>
+          <span class="score-val alto" id="score-alto">—</span>
+          <span class="score-max">de 30 puntos</span>
+        </div>
+
+        <div class="score-bars">
+          <p class="score-bar-label">Nivel de riesgo cognitivo</p>
+          <div class="score-bar-track">
+            <div class="score-bar-fill alto" id="bar-alto"></div>
+          </div>
+        </div>
+
+        <p class="result-text">
+          Tus respuestas indican un nivel significativo de <strong>deficiencia de orexina</strong>. Los síntomas que describes — apagones frecuentes, niebla mental constante, olvidos que otros ya notaron — son señales serias que no deben ignorarse.
+        </p>
+
+        <ul class="symptoms-list">
+          <li><span class="sym-icon">🔴</span> Apagones de memoria graves y frecuentes</li>
+          <li><span class="sym-icon">🔴</span> Niebla mental que limita tu funcionamiento</li>
+          <li><span class="sym-icon">🔴</span> Familiares preocupados por tu memoria</li>
+          <li><span class="sym-icon">🔴</span> Historial familiar de Alzheimer o demencia</li>
+          <li><span class="sym-icon">🔴</span> Sueño deficiente que no repara el cerebro</li>
+        </ul>
+
+        <div class="result-highlight">
+          "La buena noticia: el cerebro tiene una capacidad de recuperación notable cuando recibe los nutrientes correctos. Pero el tiempo importa. El Dr. Vega tiene un protocolo específico para situaciones como la tuya."
+        </div>
+
+        <a href="VSL_URL?resultado=alto" class="btn-cta primary" id="cta-alto">
+          Ver el protocolo del Dr. Vega — URGENTE →
+        </a>
+        <p class="btn-cta-sub">Acceso gratuito · <span>Video con protocolo para tu nivel de riesgo</span></p>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- /quiz-wrap -->
+
+<footer class="quiz-footer">
+  © 2025 Instituto de Neurología Funcional · Dr. Alejandro Vega<br>
+  Este test tiene fines informativos y no reemplaza el diagnóstico médico profesional.
+</footer>
+
+<script>
+// ── QUIZ DATA ──────────────────────────────────────────────────────────────────
+const questions = [
+  {
+    category: 'Perfil personal',
+    text: '¿Cuántos años tienes?',
+    options: [
+      { label: 'Menos de 45 años', pts: 0 },
+      { label: 'Entre 45 y 54 años', pts: 1 },
+      { label: 'Entre 55 y 64 años', pts: 2 },
+      { label: '65 años o más', pts: 3 },
+    ]
+  },
+  {
+    category: 'Memoria',
+    text: '¿Con qué frecuencia olvidas el nombre de personas que ya conoces?',
+    options: [
+      { label: 'Nunca o casi nunca', pts: 0 },
+      { label: 'De vez en cuando', pts: 1 },
+      { label: 'Con bastante frecuencia', pts: 2 },
+      { label: 'Casi todos los días', pts: 3 },
+    ]
+  },
+  {
+    category: 'Memoria',
+    text: '¿Te ha pasado ir a buscar algo a otra habitación y llegar sin recordar para qué fuiste?',
+    options: [
+      { label: 'Nunca', pts: 0 },
+      { label: 'Raramente', pts: 1 },
+      { label: 'Frecuentemente', pts: 2 },
+      { label: 'Es algo que me pasa todo el tiempo', pts: 3 },
+    ]
+  },
+  {
+    category: 'Claridad mental',
+    text: '¿Con qué frecuencia pierdes el hilo en medio de una conversación o historia que tú mismo estás contando?',
+    options: [
+      { label: 'Nunca', pts: 0 },
+      { label: 'Ocasionalmente', pts: 1 },
+      { label: 'Con frecuencia', pts: 2 },
+      { label: 'Casi siempre', pts: 3 },
+    ]
+  },
+  {
+    category: 'Claridad mental',
+    text: '¿Cómo describirías tu claridad mental en el día a día?',
+    options: [
+      { label: 'Muy clara — proceso la información rápido', pts: 0 },
+      { label: 'Bastante bien, aunque a veces me cuesta concentrarme', pts: 1 },
+      { label: 'Siento que tengo niebla mental con frecuencia', pts: 2 },
+      { label: 'Me siento lento y confundido la mayor parte del tiempo', pts: 3 },
+    ]
+  },
+  {
+    category: 'Hábitos de sueño',
+    text: '¿Cuántas horas sueles dormir por noche?',
+    options: [
+      { label: '7 a 8 horas de forma regular', pts: 0 },
+      { label: 'Entre 6 y 7 horas', pts: 1 },
+      { label: 'Menos de 6 horas', pts: 2 },
+      { label: 'Duermo muchas horas pero me despierto cansado', pts: 3 },
+    ]
+  },
+  {
+    category: 'Alimentación',
+    text: '¿Con qué frecuencia consumes pescado, huevos o alimentos ricos en omega 3?',
+    options: [
+      { label: 'Todos los días', pts: 0 },
+      { label: 'Varias veces por semana', pts: 1 },
+      { label: 'Raramente', pts: 2 },
+      { label: 'Casi nunca', pts: 3 },
+    ]
+  },
+  {
+    category: 'Percepción externa',
+    text: '¿Alguien cercano a ti ha notado que olvidas cosas con más frecuencia que antes?',
+    options: [
+      { label: 'No, nadie ha mencionado nada', pts: 0 },
+      { label: 'Alguna vez lo han insinuado', pts: 1 },
+      { label: 'Sí, me lo han dicho directamente', pts: 2 },
+      { label: 'Sí, y es motivo de preocupación en mi familia', pts: 3 },
+    ]
+  },
+  {
+    category: 'Historial familiar',
+    text: '¿Tienes familiar directo (padre, madre, abuelos) que haya sufrido Alzheimer o demencia?',
+    options: [
+      { label: 'No que yo sepa', pts: 0 },
+      { label: 'Algún familiar lejano', pts: 1 },
+      { label: 'Un familiar directo', pts: 2 },
+      { label: 'Más de un familiar directo', pts: 3 },
+    ]
+  },
+  {
+    category: 'Intentos previos',
+    text: '¿Ya has intentado algo para mejorar tu memoria — ejercicios mentales, suplementos, dietas — sin ver resultado?',
+    options: [
+      { label: 'No he intentado nada todavía', pts: 0 },
+      { label: 'He intentado algo pero sin constancia', pts: 1 },
+      { label: 'He intentado varias cosas sin resultado duradero', pts: 2 },
+      { label: 'He probado de todo y nada funcionó', pts: 3 },
+    ]
+  },
+];
+
+// ── IMAGENS POR PERGUNTA ───────────────────────────────────────────────────────
+const questionImages = [
+  'quiz-q1.jpeg',   // Q1  — Perfil/idade — Cérebro 3D
+  'quiz-q2.jpeg',   // Q2  — Esquece nomes — Mulher tentando lembrar
+  'quiz-q3.jpeg',   // Q3  — Vai buscar e esquece — Mulher na porta confusa
+  'quiz-q4.jpeg',   // Q4  — Perde o fio — Mulher travando em conversa
+  'quiz-q5.jpeg',   // Q5  — Clareza mental — Névoa mental
+  'quiz-q6.jpeg',   // Q6  — Sono — Mulher na cama cansada
+  'quiz-q7.jpeg',   // Q7  — Alimentação — Composição de alimentos
+  'quiz-q8.jpeg',   // Q8  — Família notou — Filho apoiando mãe
+  'quiz-q9.jpeg',   // Q9  — Histórico familiar — Mulher com álbum de fotos
+  'quiz-q10.jpeg',  // Q10 — Tentativas anteriores — Mulher pensativa
+];
+
+// ── STATE ──────────────────────────────────────────────────────────────────────
+let current = 0;
+let totalScore = 0;
+const letters = ['A', 'B', 'C', 'D'];
+
+// ── INIT ───────────────────────────────────────────────────────────────────────
+function buildBrainDots() {
+  const row = document.getElementById('brain-row');
+  row.innerHTML = '';
+  for (let i = 0; i < questions.length; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'brain-dot';
+    dot.id = `dot-${i}`;
+    row.appendChild(dot);
+  }
+}
+
+function startQuiz() {
+  showScreen('screen-quiz');
+  buildBrainDots();
+  renderQuestion(0);
+}
+
+// ── RENDER QUESTION ────────────────────────────────────────────────────────────
+function renderQuestion(idx) {
+  const q = questions[idx];
+  const total = questions.length;
+
+  // Troca imagem com fade suave
+  const qImg = document.getElementById('q-image');
+  if (qImg && questionImages[idx]) {
+    qImg.style.opacity = '0';
+    setTimeout(() => {
+      qImg.src = questionImages[idx];
+      qImg.style.opacity = '1';
+    }, 150);
+  }
+
+  // Progress
+  const pct = Math.round((idx / total) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-frac').textContent = `${idx + 1} de ${total}`;
+
+  // Brain dots
+  for (let i = 0; i < total; i++) {
+    const dot = document.getElementById(`dot-${i}`);
+    if (i < idx) dot.classList.add('lit');
+    else dot.classList.remove('lit');
+  }
+
+  // Card content
+  document.getElementById('q-category').textContent = q.category;
+  document.getElementById('q-text').textContent = q.text;
+
+  const optList = document.getElementById('options-list');
+  optList.innerHTML = '';
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `
+      <span class="option-letter">${letters[i]}</span>
+      <span>${opt.label}</span>
+    `;
+    btn.addEventListener('click', () => selectOption(btn, opt.pts, idx));
+    optList.appendChild(btn);
+  });
+
+  // Animate card
+  const card = document.getElementById('q-card');
+  card.style.animation = 'none';
+  card.offsetHeight; // reflow
+  card.style.animation = 'slideIn 0.3s ease';
+}
+
+// ── SELECT OPTION ──────────────────────────────────────────────────────────────
+function selectOption(btn, pts, idx) {
+  // Disable all options
+  const allBtns = document.querySelectorAll('.option-btn');
+  allBtns.forEach(b => b.style.pointerEvents = 'none');
+
+  // Highlight selected
+  btn.classList.add('selected');
+
+  totalScore += pts;
+
+  setTimeout(() => {
+    if (idx + 1 < questions.length) {
+      renderQuestion(idx + 1);
+    } else {
+      showLoading();
+    }
+  }, 320);
+}
+
+// ── LOADING ────────────────────────────────────────────────────────────────────
+const loadingSteps = [
+  'Evaluando frecuencia de olvidos...',
+  'Analizando patrones de sueño...',
+  'Calculando déficit de orexina...',
+  'Evaluando historial familiar...',
+  'Preparando tu resultado personalizado...',
+];
+
+function showLoading() {
+  showScreen('screen-loading');
+  const bar = document.getElementById('loading-bar');
+  const stepEl = document.getElementById('loading-step');
+  let progress = 0;
+  let stepIdx = 0;
+
+  const interval = setInterval(() => {
+    progress += 4;
+    bar.style.width = Math.min(progress, 100) + '%';
+
+    if (progress % 20 === 0 && stepIdx < loadingSteps.length) {
+      stepEl.textContent = loadingSteps[stepIdx];
+      stepIdx++;
+    }
+
+    if (progress >= 100) {
+      clearInterval(interval);
+      setTimeout(showResult, 400);
+    }
+  }, 50);
+}
+
+// ── RESULT ─────────────────────────────────────────────────────────────────────
+function showResult() {
+  // Sempre Alerta Alto — pontuação exibida mínima de 22
+  const displayScore = Math.max(totalScore, 22);
+  const pct = Math.round((displayScore / 30) * 100);
+
+  document.getElementById('score-alto').textContent = displayScore;
+  setTimeout(() => {
+    document.getElementById('bar-alto').style.width = pct + '%';
+  }, 300);
+  showScreen('screen-alto');
+}
+
+// ── UTILS ──────────────────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
