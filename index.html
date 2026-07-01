@@ -1035,6 +1035,9 @@ function renderQuestion(idx) {
   const q = questions[idx];
   const total = questions.length;
 
+  // Sobe para o topo a cada pergunta
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
   // Troca imagem com fade suave
   const qImg = document.getElementById('q-image');
   if (qImg && questionImages[idx]) {
